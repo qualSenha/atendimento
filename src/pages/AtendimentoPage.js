@@ -6,16 +6,27 @@ import moment from 'moment-timezone'
 
 export default function AtendimentoPage() {
     const [agendamentos, setAgendamentos] = useState([])
+    const [local, setLocal] = useState('')
+    const [atual, setAtual] = useState('')
 
     useEffect(() => {
         async function loadAgendamentos() {
-            const response = await api.get('/getAgendamentos')
-            console.log(response)
+            if(!local)
+                setLocal('anaRosa')
+
+            const response = await api.get(`/getAgendamentos?local=${local}`)
+
             setAgendamentos(response.data)
         }
 
         loadAgendamentos()
     })
+
+    async function handleAgendamento() {
+        const response = await api.get(`/chamarAgendamento?local=${local}`)
+console.log(response.data)
+        setAtual(response.data.ra)
+    }
 
     return (
         <>
@@ -26,24 +37,42 @@ export default function AtendimentoPage() {
 
                 <div className="guiche">
                     <span>Guichê</span>
-                    <select name="" id="">
+                    <select name="guiche" id="guiche">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
                         <option value="5">5</option>
                     </select>
+                    &nbsp;
+                    <span>Local</span>
+                    <select name="local" id="local" onChange={e => setLocal(e.target.value)}>
+                        <option value="anaRosa">Ana Rosa</option>
+                        <option value="anhangabau">Vale do Anhangabaú</option>
+                        <option value="predioTres">Liberdade Prédio 3</option>
+                        <option value="saoBernardo">São Bernardo do Campo</option>
+                        <option value="brigadeiro">Brigadeiro</option>
+                        <option value="predioDez">Liberade Prédio 10</option>
+                        <option value="ponteEstaiada">Ponte Estaiada</option>
+                        <option value="itaimBibi">Itaim Bibi</option>
+                        <option value="posGraduacao">Centro de Pós-Graduação</option>
+                        <option value="vilaMarianaI">Vila Mariana I</option>
+                        <option value="vilaMarianaII">Vila Mariana II</option>
+                        <option value="santoAmaro">Santo Amaro</option>
+                        <option value="morumbi">Morumbi</option>
+                        <option value="liberdade">Liberdade</option>
+                    </select>
                 </div>
 
                 <div className="buttons">
-                    <button>Agendada</button>
+                    <button onClick={handleAgendamento}>Agendada</button>
                     <button>Normal</button>
                     <button>Chamar de novo</button>
                 </div>
 
                 <div className="painel">
                     <div className="senha">
-                        Atual: <span id="senha">A103</span>
+                        Atual: <span id="senha">{ atual }</span>
                     </div>
                     <p>Painel de senhas</p>
                     <div className="senhas">
@@ -75,6 +104,17 @@ export default function AtendimentoPage() {
                                     <th>Senha</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                <tr>
+                                    <td>021</td>
+                                </tr>
+                                <tr>
+                                    <td>022</td>
+                                </tr>
+                                <tr>
+                                    <td>023</td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>

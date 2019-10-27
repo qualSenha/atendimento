@@ -26,10 +26,16 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.main-container .guiche select {
+.main-container .guiche #guiche {
   margin-left: 10px;
   height: 30px;
   width: 40px;
+}
+
+.main-container .guiche #local {
+  margin-left: 10px;
+  height: 30px;
+  width: 170px;
 }
 
 .main-container .buttons button {
