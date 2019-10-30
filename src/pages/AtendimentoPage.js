@@ -6,6 +6,7 @@ import moment from 'moment-timezone'
 
 export default function AtendimentoPage() {
     const [agendamentos, setAgendamentos] = useState([])
+    const [senhas, setSenhas] = useState([])
     const [local, setLocal] = useState('')
     const [atual, setAtual] = useState('')
 
@@ -19,13 +20,29 @@ export default function AtendimentoPage() {
             setAgendamentos(response.data)
         }
 
+        async function loadSenhas() {
+            if(!local)
+                setLocal('anaRosa')
+
+            const response = await api.get(`/getSenhas?local=${local}`)
+
+            setSenhas(response.data)
+        }
+
         loadAgendamentos()
+        loadSenhas()
     })
 
     async function handleAgendamento() {
         const response = await api.get(`/chamarAgendamento?local=${local}`)
-console.log(response.data)
+
         setAtual(response.data.ra)
+    }
+
+    async function handleSenha() {
+        const response = await api.get(`/chamarSenha?local=${local}`)
+
+        setAtual(response.data.senha)
     }
 
     return (
@@ -66,7 +83,7 @@ console.log(response.data)
 
                 <div className="buttons">
                     <button onClick={handleAgendamento}>Agendada</button>
-                    <button>Normal</button>
+                    <button onClick={handleSenha}>Normal</button>
                     <button>Chamar de novo</button>
                 </div>
 
@@ -105,15 +122,11 @@ console.log(response.data)
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>021</td>
-                                </tr>
-                                <tr>
-                                    <td>022</td>
-                                </tr>
-                                <tr>
-                                    <td>023</td>
-                                </tr>
+                                {senhas.map(senha => (
+                                    <tr key={senha.id}>
+                                        <td>{ senha.senha }</td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>
