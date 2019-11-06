@@ -16,7 +16,7 @@ export default function AtendimentoPage() {
                 setLocal('anaRosa')
 
             const response = await api.get(`/getAgendamentos?local=${local}`)
-
+            console.log('agend', response.data)
             setAgendamentos(response.data)
         }
 
