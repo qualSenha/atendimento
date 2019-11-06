@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import Socket from 'socket.io-client'
 
+import Socket from 'socket.io-client'
 import logo from '../assets/img/Logos.png'
-import api from '../services/api'
 import moment from 'moment-timezone'
 
 export default function ChatPage() {
