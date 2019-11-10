@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 
-import logo from '../assets/img/Logos.png'
-import api from '../services/api'
 import moment from 'moment-timezone'
 import socket from 'socket.io-client'
+import logo from '../assets/img/Logos.png'
+import api from '../services/api'
 
 export default function AtendimentoPage() {
     const [agendamentos, setAgendamentos] = useState([])
@@ -54,7 +54,7 @@ export default function AtendimentoPage() {
         io.emit('chamarNormal', {
             senha: response.data.senha
         })
-    }    
+    }
 
     return (
         <>

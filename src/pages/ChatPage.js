@@ -8,11 +8,15 @@ import moment from 'moment-timezone'
 export default function ChatPage({ match }) {
     const [mensagens, setMensagens] = useState([])
     const [mensagem, setMensagem] = useState('')
-    
+
+    window.onload = () => {
+        document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight
+    }
+
     useEffect(() => {
         async function loadMensagens() {
             const response = await api.get(`/getChat?ra=${match.params.ra}`)
-            
+
             setMensagens(response.data)
         }
 
@@ -20,9 +24,9 @@ export default function ChatPage({ match }) {
     })
     
     async function handleSubmit(event) {
-        event.preventDefault()
-
         const io = socket('http://localhost:5000')
+
+        //event.preventDefault()
         
         io.emit('add-message', { 
             text: mensagem, 
@@ -38,10 +42,10 @@ export default function ChatPage({ match }) {
                 <img src={logo} alt="" height="100" />
                 <a href="/">Voltar para a tela inicial</a>
 
-                <div className="chat">
+                <div id="chat" className="chat">
                     {mensagens.map(msg => (
                         <div className={`balao ${msg.origem != 'aluno' ? 'balao-right' : null}`} key={msg.data}>
-                            <span className="ra">8144349</span>
+                            <span className="ra">{msg.origem == 'aluno' ? match.params.ra : 'Atendimento'}</span>
                             <span className="msg">{msg.text}</span>
                             <span className="data">{msg.data}</span>
                         </div>

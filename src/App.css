@@ -96,11 +96,28 @@ body {
   margin: 1.5rem 0.5rem;
   padding: 0.5rem 0;
   border-radius: 10px;
+  text-align: left;
 }
 
 .main-container .chat .balao-right {
   background: #afafaf;
   float: right;
+}
+
+.main-container .chat .balao .ra,
+.main-container .chat .balao .msg {
+  margin-left: 0.5rem;
+}
+
+.main-container .chat .balao .ra {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.main-container .chat .balao .data {
+  text-align: right;
+  margin-right: 0.5rem;
+  font-size: 0.7rem;
 }
 
 .main-container .send {
