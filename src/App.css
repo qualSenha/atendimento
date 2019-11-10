@@ -73,3 +73,69 @@ body {
 .main-container .painel .senhas .agendadas {
   border-right: 1px solid red;
 }
+
+.main-container .lista table {
+  border: 1px solid red;
+  padding: 20px 10px;
+  background: #fff;
+}
+
+.main-container .chat {
+  background: #fff;
+  width: 70vw;
+  height: 60vh;
+  margin-top: 1rem;
+  overflow-y: scroll;
+}
+
+.main-container .chat .balao {
+  background: #488aff;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 1.5rem 0.5rem;
+  padding: 0.5rem 0;
+  border-radius: 10px;
+}
+
+.main-container .chat .balao-right {
+  background: #afafaf;
+  float: right;
+}
+
+.main-container .send {
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.main-container .send input {
+  height: 20px;
+  width: 60vw;
+}
+
+.main-container .send button {
+  all: unset;
+  height: 20px;
+  width: 10vw;
+  color: #488aff;
+  cursor: pointer;
+}
+
+.alert {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.5rem;
+  background: rgba(255, 0, 0, 0.5);
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.alert .fechar,
+.alert a {
+  cursor: pointer;
+  padding: 0 0.5rem;
+  text-decoration: none;
+  color: #333;
+  border: 1px dotted red;
+}

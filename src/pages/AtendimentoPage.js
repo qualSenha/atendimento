@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import logo from '../assets/img/Logos.png'
 import api from '../services/api'
 import moment from 'moment-timezone'
+import socket from 'socket.io-client'
 
 export default function AtendimentoPage() {
     const [agendamentos, setAgendamentos] = useState([])
@@ -10,13 +11,15 @@ export default function AtendimentoPage() {
     const [local, setLocal] = useState('')
     const [atual, setAtual] = useState('')
 
+    const io = socket('http://localhost:5000')
+
     useEffect(() => {
         async function loadAgendamentos() {
             if(!local)
                 setLocal('anaRosa')
 
             const response = await api.get(`/getAgendamentos?local=${local}`)
-            console.log('agend', response.data)
+
             setAgendamentos(response.data)
         }
 
@@ -37,13 +40,21 @@ export default function AtendimentoPage() {
         const response = await api.get(`/chamarAgendamento?local=${local}`)
 
         setAtual(response.data.ra)
+
+        io.emit('chamarAgendada', {
+            ra: atual
+        })
     }
 
     async function handleSenha() {
         const response = await api.get(`/chamarSenha?local=${local}`)
 
         setAtual(response.data.senha)
-    }
+
+        io.emit('chamarNormal', {
+            senha: response.data.senha
+        })
+    }    
 
     return (
         <>
@@ -79,6 +90,8 @@ export default function AtendimentoPage() {
                         <option value="morumbi">Morumbi</option>
                         <option value="liberdade">Liberdade</option>
                     </select>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="/lista">Ir para o chat</a>
                 </div>
 
                 <div className="buttons">
