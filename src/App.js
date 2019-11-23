@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css'
 
 import Routes from './routes'
@@ -11,13 +11,15 @@ function App() {
 
   const io = socket('http://localhost:5000')
 
-  io.on('message', data => {
-    setRa(data.ra)
-    setNome(data.nome)
-
-    if(data.origem == 'aluno')
-      setAluno(true)
-  })
+  useEffect(() => {
+    io.on('message', data => {
+      setRa(data.ra)
+      setNome(data.nome)
+  
+      if(data.origem == 'aluno')
+        setAluno(true)
+    })
+  },[socket])
 
   function handleFechar() {
     setAluno(false)

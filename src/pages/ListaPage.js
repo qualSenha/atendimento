@@ -11,7 +11,6 @@ export default function AtendimentoPage() {
         async function loadPessoas() {
 
             const response = await api.get(`/getChamados`)
-            console.log(response.data)
 
             setPessoas(response.data)
         }

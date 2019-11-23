@@ -13,25 +13,25 @@ export default function AtendimentoPage() {
 
     const io = socket('http://localhost:5000')
 
+    async function loadAgendamentos() {
+        if(!local)
+            setLocal('anaRosa')
+
+        const response = await api.get(`/getAgendamentos?local=${local}`)
+
+        setAgendamentos(response.data)
+    }
+
+    async function loadSenhas() {
+        if(!local)
+            setLocal('anaRosa')
+
+        const response = await api.get(`/getSenhas?local=${local}`)
+
+        setSenhas(response.data)
+    }
+
     useEffect(() => {
-        async function loadAgendamentos() {
-            if(!local)
-                setLocal('anaRosa')
-
-            const response = await api.get(`/getAgendamentos?local=${local}`)
-
-            setAgendamentos(response.data)
-        }
-
-        async function loadSenhas() {
-            if(!local)
-                setLocal('anaRosa')
-
-            const response = await api.get(`/getSenhas?local=${local}`)
-
-            setSenhas(response.data)
-        }
-
         loadAgendamentos()
         loadSenhas()
     })
@@ -74,7 +74,11 @@ export default function AtendimentoPage() {
                     </select>
                     &nbsp;
                     <span>Local</span>
-                    <select name="local" id="local" onChange={e => setLocal(e.target.value)}>
+                    <select name="local" id="local" onChange={(e) => {
+                        setLocal(e.target.value)
+                        loadAgendamentos()
+                        loadSenhas()
+                    }}>
                         <option value="anaRosa">Ana Rosa</option>
                         <option value="anhangabau">Vale do Anhangabaú</option>
                         <option value="predioTres">Liberdade Prédio 3</option>

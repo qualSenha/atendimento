@@ -9,9 +9,9 @@ export default function ChatPage({ match }) {
     const [mensagens, setMensagens] = useState([])
     const [mensagem, setMensagem] = useState('')
 
-    window.onload = () => {
+    useEffect(() => {
         document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight
-    }
+    },[])
 
     useEffect(() => {
         async function loadMensagens() {
@@ -24,9 +24,9 @@ export default function ChatPage({ match }) {
     })
     
     async function handleSubmit(event) {
+        event.preventDefault()
+        
         const io = socket('http://localhost:5000')
-
-        //event.preventDefault()
         
         io.emit('add-message', { 
             text: mensagem, 
