@@ -29,11 +29,14 @@ export default function ChatPage({ match }) {
         const io = socket('http://localhost:5000')
         
         io.emit('add-message', { 
-            text: mensagem, 
-            origem: 'atendimento',
+            text: mensagem,
+            nickname: 'Atendimento',
             ra: match.params.ra,
+            origem: 'atendimento',
             data: moment(new Date()).tz('America/Sao_Paulo').format('DD-MM-YYYY HH:mm:ss')
         })
+
+        setMensagem('')
     }
 
     return (

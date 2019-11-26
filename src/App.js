@@ -13,11 +13,14 @@ function App() {
 
   useEffect(() => {
     io.on('message', data => {
+      console.log(data)
       setRa(data.ra)
       setNome(data.nome)
   
       if(data.origem == 'aluno')
         setAluno(true)
+      else
+        setAluno(false)
     })
   },[socket])
 
